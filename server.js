@@ -1,5 +1,5 @@
 "use strict";
-
+global.conversationId = undefined;
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');

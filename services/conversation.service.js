@@ -2,7 +2,7 @@
 
 const conversationRepo = require('../repositories').ConversationRepo;
 
-exports.findConversationWithId = function(conversationId){
-    return conversationRepo.findConversationWithId(conversationId);
+exports.findConversationWithConversationId = function(conversationId){
+    return conversationRepo.findConversationWithConversationId(conversationId);
 }
 

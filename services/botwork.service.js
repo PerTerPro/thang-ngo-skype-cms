@@ -17,7 +17,7 @@ exports.upsertBotWork = function(botWork){
     botWork.isSended = false;
     if(botWork.id){
         return botRepo.updateBotWork(botWork);
-    }else{
+    } else{
         botWork.id = moment().format('YYYYMMDDHHmmss');
         return botRepo.addBotWork(botWork);
     }

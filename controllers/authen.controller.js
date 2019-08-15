@@ -23,11 +23,13 @@ function renderLogin(req, res) {
 }
 
 function login(req, res) {
-  conversationService.findConversationWithId(req.body.conversationId).then(function (data) {
+  conversationService.findConversationWithConversationId(req.body.conversationId).then(function (data) {
     if (data != null) {
+      global.conversationId = data.conversationId;
+      console.log('global.conversationId', global.conversationId);
       res.status(200).json(data);
     } else {
-      res.status(400).json({'message': 'Looix'});
+      res.status(400).json({ 'message': 'Looix' });
     };
   })
 };

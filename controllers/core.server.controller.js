@@ -25,7 +25,12 @@ module.exports = {
 */
 function renderHomePage(req, res) {
   // var conversationId = localStorage.getItem('conversationId');
-  var conversationId = '29:1UxXLu0fePcHipKWVCSWWP410RtBxqew33YVfO9e_TAU';
+  if(global.conversationId == undefined){
+    return res.render('login', {
+      layout: null // render without using a layout template
+    });
+  }
+  var conversationId = global.conversationId;
   if (conversationId) {
     if (req.query.botworkId != undefined) {
       if (req.query.botworkId > 0) {
@@ -66,7 +71,7 @@ function renderHomePage(req, res) {
     }
   }
   else {
-    window.locaiton.href = '/login';
+    window.location.href = '/login';
   }
 }
 

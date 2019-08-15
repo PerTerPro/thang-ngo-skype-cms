@@ -3,17 +3,37 @@ var mongoose  = require('mongoose');
 const url = process.env.ConnectionString;
 const collection = 'conversation';
 
-var mongoose = require('mongoose');
-var botWorkModel = require('../models/botworkModel');
-var schema = botWorkModel.botWorkModel();
-var BotWork = mongoose.model(collection, schema);
+// mongoose.connect(url, { useNewUrlParser: true });
+//  const client = new mongoose.connect(url, { useNewUrlParser: true });
+
+//Ép Mongoose sử dụng thư viện promise toàn cục
+mongoose.Promise = global.Promise;
+
+//Lấy kết nối mặc định
+var db = mongoose.connection;
+
+var conversationModel = require('../models/conversationModel');
+var schema = conversationModel.conversationModel();
+var Conversation = mongoose.model(collection, schema);
+
+
+
+//Ràng buộc kết nối với sự kiện lỗi (để lấy ra thông báo khi có lỗi)
+db.on('error', function () {
+    console.error('MongoDB connection error:');
+});
 
 // const url = process.env.ConnectionString;
 // mongoose.connect(url, { useNewUrlParser: true });
 // const client = new mongoose.connect(url, { useNewUrlParser: true });
 // var client = mongoose.connection;
 
-exports.findConversationWithId = function (conversationId) {
+exports.findConversationWithConversationId = function (conversationId) {
+    var query = {
+        conversationId: conversationId
+    }
+    return Conversation.findOne(query);
+    
 
     // return new Promise(function (resolve, reject) {
     //     client.connect(err => {
