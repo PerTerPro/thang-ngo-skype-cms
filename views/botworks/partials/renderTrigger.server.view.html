@@ -1,0 +1,72 @@
+<tbody>
+        {{#checkWorkTypeTrigger trigger.typeTrigger 1}}
+        <tr>
+            <td>
+                <strong>Thời gian: </strong>
+                {{trigger.endDate}} - {{trigger.timeOfDay}}</td>
+        </tr>
+        {{/checkWorkTypeTrigger}}
+        
+        {{#checkWorkTypeTrigger trigger.typeTrigger 2}}
+        <tr>
+            <td>
+                <strong>Khoảng thời gian: </strong>
+                {{trigger.startDate}} - {{trigger.endDate}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Vào lúc: </strong>
+                {{trigger.timeOfDay}}
+            </td>
+        </tr>
+        {{/checkWorkTypeTrigger}}
+        
+        {{#checkWorkTypeTrigger trigger.typeTrigger 3}}
+        <tr>
+            <td>
+                <strong>Khoảng thời gian: </strong>
+                {{trigger.startDate}} - {{trigger.endDate}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Vào lúc: </strong>
+                {{trigger.timeOfDay}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Ngày trong tuần: </strong>
+                {{trigger.dayOfWeek}}
+            </td>
+        </tr>
+        {{/checkWorkTypeTrigger}}
+        
+        {{#checkWorkTypeTrigger trigger.typeTrigger 4}}
+        <tr>
+            <td>
+                <strong>Khoảng thời gian: </strong>
+                {{trigger.startDate}} - {{trigger.endDate}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Vào lúc: </strong>
+                {{trigger.timeOfDay}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Tháng: </strong>
+                {{trigger.month}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Ngày trong tháng: </strong>
+                {{trigger.dayOfMonth}}
+            </td>
+        </tr>
+        {{/checkWorkTypeTrigger}}
+</tbody>

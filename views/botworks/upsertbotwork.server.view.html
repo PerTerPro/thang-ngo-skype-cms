@@ -1,0 +1,235 @@
+{{#contentFor "pageScripts"}}
+<script src="js/botworkPage.js"></script>
+<script>
+    $(document).ready(function () {
+        // $('#time').datetimepicker({});
+        // console.log('Hello {{title}}');
+        var botWork = JSON.parse($('<div/>').html('{{workString}}').text());
+        localStorage.setItem('botwork', $('<div/>').html('{{workString}}').text());
+        console.log(botWork);
+        init();
+        settingTypeTrigger(botWork.trigger.typeTrigger);
+        if (botWork.id) {
+            renderTrigger(botWork.trigger);
+        }
+    })
+
+</script>
+{{/contentFor}}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">
+                    {{#if work.id}}                   
+                        Chỉnh sửa lời nhắc: <strong class="workName">{{work.name}}</strong>
+                    {{else}}
+                        Thêm lời nhắc mới:
+                    {{/if}}
+                </h4>
+            </div>
+            <div class="content">
+                <form>
+                    <div class="form-group">
+                        <label>Tên lời nhắc nè:</label>
+                        <input type="text" class="form-control" placeholder="Tên lời nhắc..." name="name"
+                            value="{{work.name}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ nhận lời nhắn nè: (ConversationId) </label>
+                        <input type="text" class="form-control" placeholder="Địa chỉ nhận lời nhắn..."
+                            name="conversationId" value="{{work.conversationId}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung lời nhắn: </label>
+                        <textarea class="form-control" placeholder="Lời nhắn..." name="message"
+                            rows="5">{{work.message}}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tình trạng </label>
+
+                        <span class="checkbox checkbox-success radio-inline" style="margin-left:10px">
+                            <input type="checkbox" id="isEnabled" value="{{work.isEnabled}}" name="isEnabled"
+                                {{checkedIf work.isEnabled}}>
+                            <label for="isEnabled">
+                            </label>
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Thời điểm gửi lời nhắn: </label><br>
+                        {{#if work.id}}
+                        <button type="button" class="btn btn-success btn-sm" onclick="openModal()"><i
+                                class="fa fa-pencil-square-o"></i>
+                            Thay đổi
+                            lịch
+                        </button>
+
+                        {{else}}
+                        <button type="button" class="btn btn-info btn-sm" onclick="openModal()"><i
+                                class="fa fa-calendar"></i> Lên
+                            lịch</button>
+                        {{/if}}
+
+                        <div style="margin-top: 10px">
+                            <table class="table renderTrigger">
+
+                            </table>
+                        </div>
+                    </div>
+
+                    {{#if work.id}}
+                    <button type="button" class="btn btn-success btn-fill pull-right" onclick="upsertBotwork()"><i
+                            class="fa fa-upload" aria-hidden="true"></i> Cập
+                        nhật</button>
+
+                    {{else}}
+                    <button type="button" class="btn btn-info btn-fill pull-right" onclick="upsertBotwork()"><i
+                            class="fa fa-upload" aria-hidden="true"></i> Thêm
+                        mới</button>
+                    {{/if}}
+
+
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Thiết lập thời gian</h4>
+                <hr />
+                <div class="text-center">
+                    <span class="radio radio-info radio-inline">
+                        <input type="radio" name="typeTrigger" id="oneTime" value="1">
+                        <label for="oneTime">Một lần</label>
+                    </span>
+                    <span class="radio radio-success radio-inline">
+                        <input type="radio" name="typeTrigger" id="daily" value="2">
+                        <label for="daily">Hàng ngày</label>
+                    </span>
+                    <span class="radio radio-warning radio-inline">
+                        <input type="radio" name="typeTrigger" id="weekly" value="3">
+                        <label for="weekly">Hàng tuần</label>
+                    </span>
+                    <span class="radio radio-danger radio-inline">
+                        <input type="radio" name="typeTrigger" id="monthly" value="4">
+                        <label for="monthly">Hàng tháng</label>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="botWorkForm" class="form-horizontal">
+                    <div class="form-group oneTime-trigger trigger">
+                        <label class="col-md-3 control-label">Thời gian:</label>
+                        <div class="col-md-8">
+                            <input class="form-control text-box single-line required" id="time" name="time" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group daily-trigger weekly-trigger monthly-trigger trigger">
+                        <label class="col-md-3 control-label">Khoảng thời gian:</label>
+                        <div class="col-md-8">
+                            <input class="form-control text-box single-line required" id="interval" name="interval"
+                                type="text">
+                        </div>
+                    </div>
+                    <div class="form-group daily-trigger weekly-trigger monthly-trigger trigger">
+                        <label class="col-md-3 control-label">Vào lúc:</label>
+                        <div class="col-md-8">
+                            <input class="form-control text-box single-line required" id="timeOfDay" name="timeOfDay"
+                                type="text">
+                        </div>
+                    </div>
+                    <div class="form-group weekly-trigger trigger">
+                        <label class="col-md-3 control-label">Ngày trong tuần:</label>
+                        <div class="col-md-8">
+                            <select class="form-control select2" multiple="multiple" id="dayOfWeek" name="dayOfWeek"
+                                type="text" data-placeholder="Chọn thứ " style="width: 100%;">
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group monthly-trigger trigger">
+                        <label class="col-md-3 control-label">Chọn tháng:</label>
+                        <div class="col-md-8">
+                            <select class="form-control select2" multiple="multiple" id="month" name="month" type="text"
+                                data-placeholder="Chọn tháng " style="width: 100%;">
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group monthly-trigger trigger">
+                        <label class="col-md-3 control-label">Ngày trong tháng:</label>
+                        <div class="col-md-8">
+                            <select class="form-control select2" multiple="multiple" id="dayOfMonth" name="dayOfMonth"
+                                type="text" data-placeholder="Chọn ngày " style="width: 100%;">
+                                <option value="1"> Ngày 1</option>
+                                <option value="2"> Ngày 2</option>
+                                <option value="3"> Ngày 3</option>
+                                <option value="4"> Ngày 4</option>
+                                <option value="5"> Ngày 5</option>
+                                <option value="6"> Ngày 6</option>
+                                <option value="7"> Ngày 7</option>
+                                <option value="8"> Ngày 8</option>
+                                <option value="9"> Ngày 9</option>
+                                <option value="10"> Ngày 10</option>
+                                <option value="11"> Ngày 11</option>
+                                <option value="12"> Ngày 12</option>
+                                <option value="13"> Ngày 13</option>
+                                <option value="14"> Ngày 14</option>
+                                <option value="15"> Ngày 15</option>
+                                <option value="16"> Ngày 16</option>
+                                <option value="17"> Ngày 17</option>
+                                <option value="18"> Ngày 18</option>
+                                <option value="19"> Ngày 19</option>
+                                <option value="20"> Ngày 20</option>
+                                <option value="21"> Ngày 21</option>
+                                <option value="22"> Ngày 22</option>
+                                <option value="23"> Ngày 23</option>
+                                <option value="24"> Ngày 24</option>
+                                <option value="25"> Ngày 25</option>
+                                <option value="26"> Ngày 26</option>
+                                <option value="27"> Ngày 27</option>
+                                <option value="28"> Ngày 28</option>
+                                <option value="29"> Ngày 29</option>
+                                <option value="30"> Ngày 30</option>
+                                <option value="31"> Ngày 31</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="addTrigger()">Ô kê <i
+                            class="fa fa-thumbs-up"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
