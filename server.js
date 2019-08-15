@@ -45,7 +45,7 @@ app.set('views', './views');
 
 // app.use('/', express.static('./public'));
 
-app.listen(port, function (err) {
+app.listen(process.env.port || process.env.PORT || port, function (err) {
     if (err) {
         console.error('Something error !!');
         console.error(err);
