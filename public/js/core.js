@@ -17,3 +17,44 @@ $.fn.serializeObject = function() {
     $.each($.map(this.serializeArray(), elementMapper), appendToResult);
     return o;
 };
+
+function logout(){
+    swal({
+        title: "Bạn có chắc chắn muốn đăng xuất?",
+        // text: "Đăng xuất?",
+        html: true,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#EF5350",
+        confirmButtonText: "Đồng ý",
+        cancelButtonText: "Đóng cửa sổ",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+        function (isConfirm) {
+            if (isConfirm) {
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "/logout",
+                    "method": "POST",
+                    "headers": {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    success: function (response) {
+                        window.location.href = "/login";
+                        swal.close();
+                    },
+                    
+                    error: function (response) {
+                        swal.close();
+                    }
+                }
+            
+                $.ajax(settings);
+            }
+            else {
+                swal.close();
+            }
+        });
+}

@@ -22,7 +22,7 @@ function removeBotWork(id){
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
                     success: function (response) {
-                        window.location.reload(false); 
+                        window.location.reload(false);                         
                         swal.close();        
                     },
                     

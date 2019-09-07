@@ -1,0 +1,35 @@
+{{#contentFor "pageScripts"}}
+<script>
+</script>
+{{/contentFor}}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">
+                    Gửi tin nhắn ẩn danh
+                </h4>
+            </div>
+            <div class="content">
+                <form>
+                    <div class="form-group">
+                        <label>Địa chỉ nhận lời nhắn nè: (ConversationId) </label>
+                        <input type="text" class="form-control" placeholder="Địa chỉ nhận lời nhắn..."
+                            name="conversationId" value="{{work.conversationId}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung lời nhắn: </label>
+                        <textarea class="form-control" placeholder="Lời nhắn..." name="message"
+                            rows="5">{{work.message}}</textarea>
+                    </div>
+
+                    <button type="button" class="btn btn-success btn-fill pull-right" onclick=""><i
+                            class="pe-7s-paper-plane" aria-hidden="true"></i> Gửi </button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -25,8 +25,8 @@
                             <th>Name</th>
                             <!-- <th>ConversationId</th> -->
                             <th>Message</th>
-                            <th>Tình trạng</th>
-                            <th>Chức năng</th>
+                            <th class="text-center">Tình trạng</th>
+                            <th class="text-center">Chức năng</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,14 +37,14 @@
                             <!-- <td>{{conversationId}}</td> -->
 
                             <td>{{message}}</td>
-                            <td>
+                            <td class="text-center">
                                 {{#if isEnabled}}
-                                <span class="label label-success">Bật</span>
+                                <span class="label label-success">Kích hoạt</span>
                                 {{else}}
                                 <span class="label label-danger">Tắt</span>
                                 {{/if}}
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <span><a href="/?botworkId={{id}}"><i class="text-success fa fa-edit"></i></a></span>
                                 <span><a onclick="removeBotWork('{{id}}')"><i
                                             class="text-danger fa fa-trash"></i></a></span>
