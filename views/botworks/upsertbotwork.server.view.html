@@ -1,5 +1,5 @@
 {{#contentFor "pageScripts"}}
-<script src="js/botworkPage.js"></script>
+<script src="js/pages/botworkPage.js"></script>
 <script>
     $(document).ready(function () {
         // $('#time').datetimepicker({});
@@ -50,11 +50,10 @@
                     <div class="form-group">
                         <label>Tình trạng </label>
 
-                        <span class="checkbox checkbox-success radio-inline" style="margin-left:10px">
+                        <span class="checkbox checkbox-success radio-inline" style="margin-left:10px">                           
                             <input type="checkbox" id="isEnabled" value="{{work.isEnabled}}" name="isEnabled"
-                                {{checkedIf work.isEnabled}}>
-                            <label for="isEnabled">
-                            </label>
+                                {{checkedIf work.isEnabled}}>   
+                            <label for="isEnabled"></label>                     
                         </span>
                     </div>
 

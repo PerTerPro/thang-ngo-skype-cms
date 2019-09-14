@@ -35,8 +35,8 @@
 					"data": {
 						"conversationId": conversationId
 					},
-					success: function (response) {
-						localStorage.setItem('conversationId', response.conversationId);
+					success: function (response) {						
+						localStorage.setItem('username', response.name);
 						window.location.href = '/';
 					},
 					error: function (response) {

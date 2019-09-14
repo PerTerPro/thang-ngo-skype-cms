@@ -38,7 +38,7 @@ function login(req, res) {
       // if(index < 0){
       //   global.conversationId.push(data.conversationId);
       // }
-      res.cookie('xamlebotLogin', data.conversationId, { maxAge: 6 * 60 * 60 * 1000 });
+      res.cookie('xamlebotLogin', data.conversationId, { maxAge: 6 * 60 * 60 * 1000 });      
       res.status(200).json(data);
     } else {
       res.status(400).json({ 'message': 'Looix' });
