@@ -7,6 +7,7 @@
 
 const coreCtrl = require('../controllers').Core;
 const authenCtrl = require('../controllers').Authentication;
+const conversationCtrl = require('../controllers').Conversation;
 
 exports.init = function (app) {
     // app.route('/').get(coreCtrl.renderHomePage);
@@ -23,6 +24,7 @@ exports.init = function (app) {
     app.route('/botwork/renderTrigger').post(coreCtrl.renderTrigger);
     app.route('/botwork/upsertBotWork').post(coreCtrl.api.upsertBotWork);   
     app.route('/botwork/removeBotWork').post(coreCtrl.api.removeBotWork);
+    app.route('/conversation/find-by-conversationId').get(conversationCtrl.api.findByConversationId);
 }
 
 // module.exports = function(app) {

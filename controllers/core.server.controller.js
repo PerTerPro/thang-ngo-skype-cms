@@ -144,10 +144,17 @@ function renderTrigger(req, res) {
 
 
 function upsertBotWork(req, res) {
-  botworkService.upsertBotWork(req.body).then(function (data) {
-    data.isNewWork = req.body.id ? false : true;
-    res.status(200).json(data);
-  })
+  var cookies = commonUtil.parseCookies(req);
+  if (!cookies.xamlebotLogin)
+    res.status(401).json('Phiên làm việc đã kết thúc. Vui lòng đăng nhập lại.');
+  else {
+    var isNewWork = req.body.id ? false : true;
+    req.body.conversationId = decodeURIComponent(cookies.xamlebotLogin);
+    botworkService.upsertBotWork(req.body).then(function (data) {
+      data.isNewWork = isNewWork;
+      res.status(200).json(isNewWork);
+    })
+  } 
 }
 
 function removeBotWork(req, res) {

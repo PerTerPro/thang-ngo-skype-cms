@@ -84,11 +84,11 @@ function settingTypeTrigger(typeTrigger) {
                 $('.oneTime-trigger').removeClass('hidden');
                 $('#oneTime').click();
 
-                if(this.botWork.id){
+                if (this.botWork.id) {
                     $('#time').val(this.botWork.trigger.endDate + " - " + this.botWork.trigger.timeOfDay);
                     $('#time').data('daterangepicker').setStartDate(this.botWork.trigger.endDate + " - " + this.botWork.trigger.timeOfDay);
                     $('#time').data('daterangepicker').setEndDate('');
-                }                
+                }
                 break;
             case 2:
                 $('.daily-trigger').removeClass('hidden');
@@ -104,7 +104,7 @@ function settingTypeTrigger(typeTrigger) {
 
                 $('#timeOfDay').val(this.botWork.trigger.timeOfDay);
                 // debugger;
-                $('#dayOfWeek').val(this.botWork.trigger.dayOfWeek).trigger("change");                
+                $('#dayOfWeek').val(this.botWork.trigger.dayOfWeek).trigger("change");
 
                 cb('#interval', this.botWork.trigger.startDate, this.botWork.trigger.endDate);
                 break;
@@ -118,7 +118,7 @@ function settingTypeTrigger(typeTrigger) {
                 cb('#interval', this.botWork.trigger.startDate, this.botWork.trigger.endDate);
                 break;
             default:
-                $('input[name=typeTrigger]').prop('checked',false);
+                $('input[name=typeTrigger]').prop('checked', false);
                 $('#myModal .radio').removeClass('checked');
                 break;
         }
@@ -173,13 +173,13 @@ function addTrigger() {
             //     trigger.dayOfWeek.push(day);
             // });
             trigger.dayOfWeek = $('#dayOfWeek').val();
-            
+
             break;
         case 4:
             trigger.startDate = $.trim($('#interval').val().split('-')[0])
             trigger.endDate = $.trim($('#interval').val().split('-')[1])
             trigger.timeOfDay = $.trim($('#timeOfDay').val())
-           
+
             // $('#month').split(',').forEach(month => {
             //     trigger.month = [];
             //     trigger.month.push(month);
@@ -204,10 +204,10 @@ function addTrigger() {
 
 function upsertBotwork() {
     common().loading('.card');
-    debugger;
+    // debugger;
     var botwork = $('form').serializeObject();
     this.botWork.name = $.trim(botwork.name);
-    this.botWork.conversationId = $.trim(botwork.conversationId);
+    this.botWork.conversationSendId = $.trim(botwork.conversationSendId);
     this.botWork.message = $.trim(botwork.message);
     this.botWork.isEnabled = botwork.isEnabled ? true : false;
 
@@ -221,21 +221,21 @@ function upsertBotwork() {
         },
         "data": this.botWork,
         success: function (response) {
-            if(!response.isNewWork){
+            if (!response) {
                 $('.workName').text($('[name=name]').val());
-                common().showToast('success','Thông báo','Cập nhật thành công!');
+                common().showToast('success', 'Thông báo', 'Cập nhật thành công!');
             }
-            else{
-                common().showToast('success','Thông báo','Thêm mới thành công! Bạn sẽ được chuyển về trang danh sách', 2000);
-                setTimeout(function(){
-                    window.location.href = '/';   
-                },2000);
-            } 
-            common().loaded('.card');            
+            else {
+                common().showToast('success', 'Thông báo', 'Thêm mới thành công! Bạn sẽ được chuyển về trang danh sách', 2000);
+                setTimeout(function () {
+                    window.location.href = '/';
+                }, 2000);
+            }
+            common().loaded('.card');
         },
         error: function (response) {
             console.log(response);
-            common().loaded('.card');    
+            common().loaded('.card');
         }
     }
 
@@ -251,3 +251,20 @@ function cb(element, start, end) {
     $(element).data('daterangepicker').setStartDate(start);
     $(element).data('daterangepicker').setEndDate(end);
 }
+
+$('[name=conversationSendId]').focusout(function () {
+    debugger;
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": common().stringFormat('/conversation/find-by-conversationId?conversationId={0}', $(this).val()),
+        "method": "GET",
+        success: function (response) {
+            $('[name=conversationSendIdName]').html(' - ' + response.name);
+        },
+        error: function (response) {
+        }
+    }
+
+    $.ajax(settings);
+});
