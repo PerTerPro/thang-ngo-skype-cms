@@ -1,20 +1,18 @@
 function sendMessage(conversationId, message, isAnonymous) {
-
-  if (isAnonymous) {
-    message += common().stringFormat(" - Từ {0}", localStorage.getItem('username'));
-  }
+  
+  if(isAnonymous == undefined) isAnonymous = true; 
 
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": common().stringFormat("https://thang-ngo-bot.herokuapp.com/sendMessage?conversationId={0}&message={1}", conversationId, message),
-    "method": "GET",
+    "url": common().stringFormat("/send-anonymous-message?conversationId={0}&message={1}&isAnonymous={2}", conversationId, message, isAnonymous),
+    "method": "POST",
     "headers": {
       "cache-control": "no-cache"
     },
     success: function (response) {
       console.log(response);
-      common().showToast('success', 'Thông báo', 'Gửi thành công');
+      common().showToast('success', 'Thông báo', response);
     },
     error: function (response) {
       debugger;

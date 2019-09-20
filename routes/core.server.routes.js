@@ -17,7 +17,9 @@ exports.init = function (app) {
     app.route('/logout')
         .post(authenCtrl.logout);
     app.route('/').get(coreCtrl.renderHomePage);
-    app.route('/send-anonymous-message').get(coreCtrl.renderSendAnonymousMessage);
+    app.route('/send-anonymous-message')
+        .get(coreCtrl.renderSendAnonymousMessage)
+        .post(coreCtrl.api.sendAnonymousMessage);
     app.route('/botwork/renderTrigger').post(coreCtrl.renderTrigger);
     app.route('/botwork/upsertBotWork').post(coreCtrl.api.upsertBotWork);   
     app.route('/botwork/removeBotWork').post(coreCtrl.api.removeBotWork);

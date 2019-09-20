@@ -43,7 +43,7 @@ function init() {
         // startDate: start,
         // endDate: end,
         ranges: {
-            'Chỉ hôm nay thôi': [moment(), moment()],
+            // 'Chỉ hôm nay thôi': [moment(), moment()],
             '7 Days': [moment(), moment().add(6, 'days')],
             '30 Days': [moment(), moment().add(29, 'days')],
             'Từ hôm nay đến hết tháng :D': [moment(), moment().endOf('month')],
@@ -75,6 +75,7 @@ function settingTypeTrigger(typeTrigger) {
     // var botWork = JSON.parse(localStorage.getItem('botwork'));
     // this.botWork = botWork;
     // this.botWork.trigger.typeTrigger = typeTrigger;
+    // debugger;
     if (this.botWork.trigger) {
         typeTrigger = typeTrigger ? typeTrigger : this.botWork.trigger.typeTrigger;
         $('.trigger').addClass('hidden');
@@ -83,7 +84,11 @@ function settingTypeTrigger(typeTrigger) {
                 $('.oneTime-trigger').removeClass('hidden');
                 $('#oneTime').click();
 
-                $('#oneTimeTab #time').val(this.botWork.trigger.endDate + " - " + this.botWork.trigger.timeOfDay);
+                if(this.botWork.id){
+                    $('#time').val(this.botWork.trigger.endDate + " - " + this.botWork.trigger.timeOfDay);
+                    $('#time').data('daterangepicker').setStartDate(this.botWork.trigger.endDate + " - " + this.botWork.trigger.timeOfDay);
+                    $('#time').data('daterangepicker').setEndDate('');
+                }                
                 break;
             case 2:
                 $('.daily-trigger').removeClass('hidden');
@@ -98,7 +103,9 @@ function settingTypeTrigger(typeTrigger) {
                 $('#weekly').click();
 
                 $('#timeOfDay').val(this.botWork.trigger.timeOfDay);
-                $('#dayOfWeek').val(this.botWork.trigger.dayOfWeek).trigger("change");
+                // debugger;
+                $('#dayOfWeek').val(this.botWork.trigger.dayOfWeek).trigger("change");                
+
                 cb('#interval', this.botWork.trigger.startDate, this.botWork.trigger.endDate);
                 break;
             case 4:
@@ -111,6 +118,8 @@ function settingTypeTrigger(typeTrigger) {
                 cb('#interval', this.botWork.trigger.startDate, this.botWork.trigger.endDate);
                 break;
             default:
+                $('input[name=typeTrigger]').prop('checked',false);
+                $('#myModal .radio').removeClass('checked');
                 break;
         }
     }
@@ -158,14 +167,31 @@ function addTrigger() {
             trigger.startDate = $.trim($('#interval').val().split('-')[0])
             trigger.endDate = $.trim($('#interval').val().split('-')[1])
             trigger.timeOfDay = $.trim($('#timeOfDay').val())
-            trigger.dayOfWeek = $.trim($('#dayOfWeek').val())
+
+            // $('#dayOfWeek').val().split(',').forEach(day => {
+            //     trigger.dayOfWeek = [];
+            //     trigger.dayOfWeek.push(day);
+            // });
+            trigger.dayOfWeek = $('#dayOfWeek').val();
+            
             break;
         case 4:
             trigger.startDate = $.trim($('#interval').val().split('-')[0])
             trigger.endDate = $.trim($('#interval').val().split('-')[1])
             trigger.timeOfDay = $.trim($('#timeOfDay').val())
-            trigger.month = $.trim($('#month').val())
-            trigger.dayOfMonth = $.trim($('#dayOfMonth').val())
+           
+            // $('#month').split(',').forEach(month => {
+            //     trigger.month = [];
+            //     trigger.month.push(month);
+            // });
+            // $('#dayOfMonth').val().split(',').forEach(day => {
+            //     trigger.dayOfMonth = [];
+            //     trigger.dayOfMonth.push(day);
+            // });
+            // trigger.month = $.trim($('#month').val())
+            // trigger.dayOfMonth = $.trim($('#dayOfMonth').val())
+            trigger.month = $('#month').val();
+            trigger.dayOfMonth = $('#dayOfMonth').val();
             break;
         default:
             break;
@@ -178,6 +204,7 @@ function addTrigger() {
 
 function upsertBotwork() {
     common().loading('.card');
+    debugger;
     var botwork = $('form').serializeObject();
     this.botWork.name = $.trim(botwork.name);
     this.botWork.conversationId = $.trim(botwork.conversationId);

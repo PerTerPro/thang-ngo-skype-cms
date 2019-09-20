@@ -39,14 +39,15 @@ function login(req, res) {
       //   global.conversationId.push(data.conversationId);
       // }
       res.cookie('xamlebotLogin', data.conversationId, { maxAge: 6 * 60 * 60 * 1000 });      
+      res.cookie('usernameLogin', data.name, { maxAge: 6 * 60 * 60 * 1000 });      
       res.status(200).json(data);
     } else {
-      res.status(400).json({ 'message': 'Looix' });
+      res.status(404).json({ 'message': 'Không tồn tại người dùng này!' });
     };
   })
 };
 
 function logout(req, res) {
   res.clearCookie('xamlebotLogin');
-  // res.redirect("/login");
+  res.redirect("/login");
 }

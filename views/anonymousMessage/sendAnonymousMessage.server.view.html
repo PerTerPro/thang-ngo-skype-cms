@@ -7,7 +7,7 @@
         <div class="card">
             <div class="header">
                 <h4 class="title">
-                    Gửi tin nhắn ẩn danh
+                    <i class="fa fa-user-secret"></i> Gửi tin nhắn ẩn danh
                 </h4>
             </div>
             <div class="content">
@@ -19,23 +19,22 @@
                     </div>
                     <div class="form-group">
                         <label>Nội dung lời nhắn: </label>
-                        <textarea class="form-control" placeholder="Lời nhắn..." name="message"
-                            rows="5"></textarea>
+                        <textarea class="form-control" placeholder="Lời nhắn..." name="message" rows="5"></textarea>
                     </div>
                     <div class="form-group">
                         <label>Gửi ẩn danh</label>
-                        <span class="checkbox checkbox-success radio-inline" style="margin-left:10px">                        
+                        <span class="checkbox checkbox-success radio-inline" style="margin-left:10px">
                             <input type="checkbox" name="isAnonymous" checked="checked">
                             <label for="isAnonymous"></label>
                         </span>
                     </div>
 
-                    <button type="button" class="btn btn-success btn-fill pull-right" onclick="sendMessage($('[name=conversationId]').val(),$('[name=message]').val())"><i
-                            class="fa fa-plane" aria-hidden="true"></i> Gửi </button>
+                    <button type="button" class="btn btn-success btn-fill pull-right"
+                        onclick="sendMessage($('[name=conversationId]').val(),$('[name=message]').val(), $('[name=isAnonymous]').is(':checked'))">
+                         Gửi <i class="fa fa-plane" aria-hidden="true"></i></button>
                     <div class="clearfix"></div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-

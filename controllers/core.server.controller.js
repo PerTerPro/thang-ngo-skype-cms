@@ -1,6 +1,7 @@
 "user strict";
 
 const botworkService = require('../services').BotWorkService;
+const utilService = require('../services').UtilService;
 const commonUtil = require('../utils/common');
 var _ = require('lodash');
 
@@ -8,13 +9,14 @@ var _ = require('lodash');
 module.exports = {
   renderHomePage: renderHomePage,
   renderContactPage: renderContact,
-  renderSendAnonymousMessage:renderSendAnonymousMessage,
+  renderSendAnonymousMessage: renderSendAnonymousMessage,
   renderTrigger: renderTrigger,
   // upsertBotWork:upsertBotWork,
   // removeBotWork:removeBotWork,
   api: {
     upsertBotWork: upsertBotWork,
-    removeBotWork: removeBotWork
+    removeBotWork: removeBotWork,
+    sendAnonymousMessage: sendAnonymousMessage
   }
 };
 
@@ -77,7 +79,7 @@ function renderHomePage(req, res) {
         // res.send('This is homepage'); 
       }
     }
-    else {      
+    else {
       // window.location.href = '/login';      
       res.redirect('/login');
     }
@@ -95,9 +97,26 @@ function renderHomePage(req, res) {
 * @param  {object} res HTTP response
 */
 function renderSendAnonymousMessage(req, res) {
-  res.render('anonymousMessage/sendAnonymousMessage',  
+  res.render('anonymousMessage/sendAnonymousMessage',
     {
+
     });
+}
+
+/**
+ * [HttpPost] API send anonymouse message
+ */
+function sendAnonymousMessage(req, res) {
+  var cookies = commonUtil.parseCookies(req);
+  if (!cookies.xamlebotLogin)
+    res.status(401).json('Phiên làm việc đã kết thúc. Vui lòng đăng nhập lại.');
+
+  var message = req.query.message;
+  if (message) {
+    message += req.query.isAnonymous == 'true' ? '' : " - Tin nhắn từ: " + cookies.usernameLogin;
+    utilService.sendMessage(req.query.conversationId, message);
+    res.status(200).json('Gửi tin nhắn thành công.');
+  }
 }
 
 /**

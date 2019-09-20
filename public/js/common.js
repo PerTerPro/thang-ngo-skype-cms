@@ -54,7 +54,7 @@ var common = function () {
     function loading(elName, message, timeout) {
         message = message !== undefined ? message : 'Vui lòng chờ trong giây lát!';
         var options = {
-            message: '<span class="text-semibold"><i class="icon-spinner4 spinner position-left"></i>&nbsp;' + message + '</span>',
+            message: '<span class="text-semibold"><i class="fa fas fa-spinner fa-spin position-left"></i>&nbsp;' + message + '</span>',
             overlayCSS: {
                 backgroundColor: '#fff',
                 opacity: 0.8,
