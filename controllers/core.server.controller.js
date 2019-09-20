@@ -110,13 +110,14 @@ function sendAnonymousMessage(req, res) {
   var cookies = commonUtil.parseCookies(req);
   if (!cookies.xamlebotLogin)
     res.status(401).json('Phiên làm việc đã kết thúc. Vui lòng đăng nhập lại.');
-
-  var message = req.query.message;
-  if (message) {
-    message += req.query.isAnonymous == 'true' ? '' : " - Tin nhắn từ: " + cookies.usernameLogin;
-    utilService.sendMessage(req.query.conversationId, message);
-    res.status(200).json('Gửi tin nhắn thành công.');
-  }
+  else{
+    var message = req.body.message;
+    if (message) {
+      message += req.body.isAnonymous == 'true' ? '' : " \n Tin nhắn từ: " + cookies.usernameLogin;
+      utilService.sendMessage(req.body.conversationId, message);
+      res.status(200).json('Gửi tin nhắn thành công.');
+    }
+  } 
 }
 
 /**
