@@ -1,5 +1,6 @@
 {{#contentFor "pageScripts"}}
 <script src="js/pages/sendAnonymousMessage.js"></script>
+<script src="js/services/conversation.service.js"></script>
 {{/contentFor}}
 
 <div class="row">
@@ -13,7 +14,7 @@
             <div class="content">
                 <form>
                     <div class="form-group">
-                        <label>Địa chỉ nhận lời nhắn nè: (ConversationId) </label>
+                        <label>Địa chỉ nhận lời nhắn nè: (ConversationId) <strong name="conversationIdName"></strong></label>
                         <input type="text" class="form-control" placeholder="Địa chỉ nhận lời nhắn..."
                             name="conversationId">
                     </div>
@@ -31,7 +32,7 @@
 
                     <button type="button" class="btn btn-success btn-fill pull-right"
                         onclick="sendMessage($('[name=conversationId]').val(),$('[name=message]').val(), $('[name=isAnonymous]').is(':checked'))">
-                         Gửi <i class="fa fa-plane" aria-hidden="true"></i></button>
+                        Gửi <i class="fa fa-plane" aria-hidden="true"></i></button>
                     <div class="clearfix"></div>
                 </form>
             </div>

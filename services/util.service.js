@@ -25,6 +25,7 @@ exports.sendMessage = function (conversationid, message) {
                 conversationId: conversationid,
                 message: message
             }
+            break;
         default:
             break;
     }

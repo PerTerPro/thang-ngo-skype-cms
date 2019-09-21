@@ -1,7 +1,7 @@
-function removeBotWork(id){
+function removeBotWork(id, name){
     swal({
         title: "Thông báo",
-        text: common().stringFormat("Bạn có chắc chắn muốn xóa <b>{0}</b>?", ),
+        text: common().stringFormat("Bạn có chắc chắn muốn xóa <br><b>{0}</b>?", name),
         html: true,
         type: "warning",
         showCancelButton: true,

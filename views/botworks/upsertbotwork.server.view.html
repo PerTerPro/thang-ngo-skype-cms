@@ -1,4 +1,5 @@
 {{#contentFor "pageScripts"}}
+<script src="js/services/conversation.service.js"></script>
 <script src="js/pages/botworkPage.js"></script>
 <script>
     $(document).ready(function () {
@@ -11,6 +12,9 @@
         settingTypeTrigger(botWork.trigger.typeTrigger);
         if (botWork.id) {
             renderTrigger(botWork.trigger);
+            conversationService().findByConversationId($('[name=conversationSendId]').val()).success(function (response) {
+                $('[name=conversationSendIdName]').html(' - ' + response.name);
+            });
         }
     })
 
@@ -37,7 +41,8 @@
                             value="{{work.name}}">
                     </div>
                     <div class="form-group">
-                        <label>Địa chỉ nhận lời nhắn nè: (ConversationId) <strong name="conversationSendIdName"></strong> </label>
+                        <label>Địa chỉ nhận lời nhắn nè: (ConversationId) <strong
+                                name="conversationSendIdName"></strong> </label>
                         <input type="text" class="form-control" placeholder="Địa chỉ nhận lời nhắn..."
                             name="conversationSendId" value="{{work.conversationSendId}}">
                     </div>

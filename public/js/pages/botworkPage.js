@@ -253,18 +253,9 @@ function cb(element, start, end) {
 }
 
 $('[name=conversationSendId]').focusout(function () {
-    debugger;
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": common().stringFormat('/conversation/find-by-conversationId?conversationId={0}', $(this).val()),
-        "method": "GET",
-        success: function (response) {
+    if($(this).val()){
+        conversationService().findByConversationId($(this).val()).success(function(response){
             $('[name=conversationSendIdName]').html(' - ' + response.name);
-        },
-        error: function (response) {
-        }
+        });
     }
-
-    $.ajax(settings);
 });

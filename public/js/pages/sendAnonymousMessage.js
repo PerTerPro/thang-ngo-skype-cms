@@ -1,6 +1,6 @@
 function sendMessage(conversationId, message, isAnonymous) {
-  
-  if(isAnonymous == undefined) isAnonymous = true; 
+
+  if (isAnonymous == undefined) isAnonymous = true;
 
   var settings = {
     'async': true,
@@ -10,7 +10,7 @@ function sendMessage(conversationId, message, isAnonymous) {
     'headers': {
       'cache-control': 'no-cache'
     },
-    'data':{
+    'data': {
       conversationId: conversationId,
       message: message,
       isAnonymous: isAnonymous
@@ -20,9 +20,17 @@ function sendMessage(conversationId, message, isAnonymous) {
       common().showToast('success', 'Thông báo', response);
     },
     error: function (response) {
-      common().showToast('error', 'Thông báo', response);      
+      common().showToast('error', 'Thông báo', response);
     }
   }
 
   $.ajax(settings);
 }
+
+$('[name=conversationId]').focusout(function () {
+  if ($(this).val()) {
+    conversationService().findByConversationId($(this).val()).success(function (response) {
+      $('[name=conversationIdName]').html(' - ' + response.name);
+    });
+  }
+});
