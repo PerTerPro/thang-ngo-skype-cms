@@ -9,7 +9,7 @@
         localStorage.setItem('botwork', $('<div/>').html('{{workString}}').text());
         console.log(botWork);
         init();
-        settingTypeTrigger(botWork.trigger.typeTrigger);
+        // settingTypeTrigger(botWork.trigger.typeTrigger);
         if (botWork.id) {
             renderTrigger(botWork.trigger);
             conversationService().findByConversationId($('[name=conversationSendId]').val()).success(function (response) {

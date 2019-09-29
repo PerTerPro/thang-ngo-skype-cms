@@ -248,6 +248,8 @@ function upsertBotwork() {
 var start = moment();
 var end = moment().add(29, 'days');
 function cb(element, start, end) {
+    start = start ? start : moment();
+    end = end ? end : moment().add(29, 'days');   
     $(element).data('daterangepicker').setStartDate(start);
     $(element).data('daterangepicker').setEndDate(end);
 }
