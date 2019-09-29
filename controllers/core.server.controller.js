@@ -44,11 +44,18 @@ function renderHomePage(req, res) {
       if (req.query.botworkId != undefined) {
         if (req.query.botworkId > 0) {
           botworkService.getById(req.query.botworkId).then(function (result) {
-            res.render('botworks/upsertbotwork', {
+
+            var objResponse = {
               title: 'Chỉnh sửa lời nhắn: ' + result.name,
-              work: result.toJSON(),
-              workString: JSON.stringify(result.toJSON())
-            });
+              work: result.toJSON()
+              // workString: JSON.stringify(result)
+            }
+
+            var clone = result.toJSON();
+            delete clone.message;
+            objResponse.workString = JSON.stringify(clone);
+
+            res.render('botworks/upsertbotwork', objResponse);
           })
         }
         else {
@@ -56,7 +63,8 @@ function renderHomePage(req, res) {
             id: undefined,
             name: '',
             conversationId: '',
-            message: '',
+            conversationSendId: '',
+            // message: '',
             isEnabled: true,
             trigger: {
               typeTrigger: 0
@@ -66,7 +74,7 @@ function renderHomePage(req, res) {
             title: 'Tạo lời nhắn mới',
             //Default value.
             work: newBotWork,
-            workString: JSON.stringify(newBotWork)
+            workString: JSON.stringify(result)            
           });
         }
       }
