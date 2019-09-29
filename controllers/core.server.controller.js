@@ -74,7 +74,7 @@ function renderHomePage(req, res) {
             title: 'Tạo lời nhắn mới',
             //Default value.
             work: newBotWork,
-            workString: JSON.stringify(result)            
+            workString: JSON.stringify(newBotWork)            
           });
         }
       }
