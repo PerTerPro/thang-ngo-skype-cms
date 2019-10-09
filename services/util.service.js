@@ -37,5 +37,13 @@ exports.sendMessage = function (conversationid, message) {
     });
 }
 
+exports.randomNumber = function(length){
+    var str = '';
+    for (let index = 0; index < length; index++) {
+        str += (Math.floor(Math.random() * 9) + 0)
+    }
+    return str;
+}
+
 
 
